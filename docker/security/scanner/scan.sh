@@ -1,0 +1,1 @@
+trivy image postech/scanner
