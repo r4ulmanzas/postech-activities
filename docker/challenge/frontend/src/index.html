@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bookshelf</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>title</th>
+                <th>author</th>
+                <th>publisher</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+    </table>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: "http://localhost:8080/books",
+                type: "GET",
+                dataType: "json",
+                success: function(response) {
+                    response.forEach(function(book) {
+                        var row = "<tr>" +
+                            "<td>" + book.id + "</td>" +
+                            "<td>" + book.title + "</td>" +
+                            "<td>" + book.authorName + "</td>" +
+                            "<td>" + book.publisherName + "</td>" +
+                            "</tr>";
+                        $("#table-body").append(row);
+                    });
+                },
+                error: function(error) {
+                    console.log("Error:", error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

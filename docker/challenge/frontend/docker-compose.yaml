@@ -1,0 +1,7 @@
+services:
+  front-end:
+    image: bitnami/nginx:latest #rootless
+    ports:
+      - 80:8080
+    volumes:
+      - ./src:/app
