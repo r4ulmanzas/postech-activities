@@ -2,7 +2,7 @@ FROM amazoncorretto:21-alpine-jdk
 
 LABEL authors="rmnzs"
 LABEL purpose="the simplest dockerfile for the challenge in SOAT course"
-EXPOSE 8080
+EXPOSE 3000
 
 WORKDIR /api
 

@@ -1,0 +1,36 @@
+networks:
+  challenge:
+    driver: bridge
+
+services:
+  postgres:
+    image: postgres:16-alpine3.19 # already rootless
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: bookshelf
+    networks:
+      - challenge
+  api:
+    build:
+      context: ./backend/challenge-api
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/bookshelf
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+    depends_on:
+      - postgres
+    networks:
+      - challenge
+    ports:
+      - 3000:3000
+  frontend:
+    image: bitnami/nginx:latest  # already rootless
+    ports:
+      - 80:8080
+    volumes:
+      - ./frontend/src:/app
+    networks:
+      - challenge
+    depends_on:
+      - api

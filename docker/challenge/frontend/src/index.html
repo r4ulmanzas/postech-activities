@@ -36,9 +36,10 @@
     <script>
         $(document).ready(function() {
             $.ajax({
-                url: "http://localhost:8080/books",
+                url: "http://localhost:3000/books",
                 type: "GET",
                 dataType: "json",
+                crossDomain: true,
                 success: function(response) {
                     response.forEach(function(book) {
                         var row = "<tr>" +
