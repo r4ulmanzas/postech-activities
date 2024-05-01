@@ -1,0 +1,24 @@
+subprojects {
+    apply plugin: 'java'
+
+    group = 'postech.soat'
+    version = '1.0-SNAPSHOT'
+
+    java {
+        sourceCompatibility = '21'
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        testImplementation platform('org.junit:junit-bom:5.10.0')
+        testImplementation 'org.junit.jupiter:junit-jupiter'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
