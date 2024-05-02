@@ -1,4 +1,4 @@
-package postech.soat;
+package postech.soat.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
