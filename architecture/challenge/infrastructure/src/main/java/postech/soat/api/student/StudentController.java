@@ -23,7 +23,12 @@ public class StudentController {
     public ApiResponse<CreateStudentResponse> createStudent(
             @Valid @RequestBody CreateStudentRequest payload
     ) {
-        var student = createStudentUseCase.create(payload.name(), payload.email(), payload.phone());
+        var student = createStudentUseCase.create(
+                payload.firstName(),
+                payload.lastName(),
+                payload.email(),
+                payload.phone()
+        );
         return new ApiResponse<>(new CreateStudentResponse(student));
     }
 }

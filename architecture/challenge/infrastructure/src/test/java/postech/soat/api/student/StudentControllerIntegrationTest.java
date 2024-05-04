@@ -33,6 +33,7 @@ public class StudentControllerIntegrationTest {
     public void whenTryingToCreateStudentWithValidInputThenReturnCreated() throws Exception {
         var payload = new CreateStudentRequest(
                 faker.gameOfThrones().character(),
+                faker.hitchhikersGuideToTheGalaxy().character(),
                 faker.internet().emailAddress(),
                 "11999999999"
         );
@@ -55,15 +56,17 @@ public class StudentControllerIntegrationTest {
                     var student = (CreateStudentResponse) apiResponse.data;
                     assertEquals(student.email(), payload.email());
                     assertEquals(student.phone(), payload.phone());
-                    assertEquals(student.name(), payload.name());
+                    assertEquals(student.firstName(), payload.firstName());
+                    assertEquals(student.lastName(), payload.lastName());
                 });
     }
 
     @ParameterizedTest
     @ValueSource(strings = { "",  " ", "                "})
-    public void whenTryingToCreateAStudentWithoutANameThenReturnBadRequest(String name) throws Exception {
+    public void whenTryingToCreateAStudentWithoutAFirstNameThenReturnBadRequest(String firstName) throws Exception {
         var payload = new CreateStudentRequest(
-                name,
+                firstName,
+                faker.hitchhikersGuideToTheGalaxy().character(),
                 faker.internet().emailAddress(),
                 "11999999999"
         );
@@ -82,7 +85,35 @@ public class StudentControllerIntegrationTest {
                     assertEquals(Status.ERROR, apiResponse.status);
                     assertNull(apiResponse.data);
                     assertEquals(1, apiResponse.errors.size());
-                    assertEquals("Name is mandatory", apiResponse.errors.getFirst().message);
+                    assertEquals("First name is mandatory", apiResponse.errors.getFirst().message);
+                });
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = { "",  " ", "                "})
+    public void whenTryingToCreateAStudentWithoutALastNameThenReturnBadRequest(String lastName) throws Exception {
+        var payload = new CreateStudentRequest(
+                faker.hitchhikersGuideToTheGalaxy().character(),
+                lastName,
+                faker.internet().emailAddress(),
+                "11999999999"
+        );
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String payloadJson = objectMapper.writeValueAsString(payload);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/students")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(payloadJson))
+                .andExpect(status().isBadRequest())
+                .andExpect(result -> {
+                    var response = result.getResponse().getContentAsString();
+                    var apiResponse = objectMapper.readValue(response,  new TypeReference<ApiResponse<ApiError>>() {});
+
+                    assertEquals(Status.ERROR, apiResponse.status);
+                    assertNull(apiResponse.data);
+                    assertEquals(1, apiResponse.errors.size());
+                    assertEquals("Last name is mandatory", apiResponse.errors.getFirst().message);
                 });
     }
 
@@ -90,6 +121,7 @@ public class StudentControllerIntegrationTest {
     @ValueSource(strings = { "asdf@",  "asdfasdf ", "asdf.com", "asdf@.com"})
     public void whenTryingToCreateAStudentWithInvalidEmailThenReturnBadRequest(String email) throws Exception {
         var payload = new CreateStudentRequest(
+                faker.hitchhikersGuideToTheGalaxy().character(),
                 faker.howIMetYourMother().character(),
                 email,
                 "11999999999"
@@ -117,6 +149,7 @@ public class StudentControllerIntegrationTest {
     @ValueSource(strings = { " ", "                "} )
     public void whenTryingToCreateAStudentWithoutAnEmailThenReturnBadRequest(String email) throws Exception {
         var payload = new CreateStudentRequest(
+                faker.hitchhikersGuideToTheGalaxy().character(),
                 faker.howIMetYourMother().character(),
                 email,
                 "11999999999"
@@ -145,6 +178,7 @@ public class StudentControllerIntegrationTest {
     @ValueSource(strings = { "", " ", "1", "1111111111", "111111111111"} )
     public void whenTryingToCreateAStudentWithoutAPhoneNumberThenReturnBadRequest(String phone) throws Exception {
         var payload = new CreateStudentRequest(
+                faker.hitchhikersGuideToTheGalaxy().character(),
                 faker.howIMetYourMother().character(),
                 faker.internet().emailAddress(),
                 phone

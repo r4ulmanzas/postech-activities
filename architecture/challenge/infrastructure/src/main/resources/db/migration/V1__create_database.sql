@@ -1,6 +1,7 @@
 create table student (
     id serial primary key,
-    name varchar(255) not null,
+    first_name varchar(255) not null,
+    last_name varchar(255) not null,
     email varchar(255) not null,
     phone char(11) not null
 );

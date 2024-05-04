@@ -1,8 +1,10 @@
 package postech.soat.student.model.valueobject;
 
+import lombok.Getter;
 import postech.soat.student.model.DomainObject;
 import postech.soat.student.model.DomainValidationException;
 
+@Getter
 public class FullName extends DomainObject {
     private final String firstName;
     private final String lastName;

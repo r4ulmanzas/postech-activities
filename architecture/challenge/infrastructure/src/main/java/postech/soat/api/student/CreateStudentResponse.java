@@ -3,9 +3,14 @@ package postech.soat.api.student;
 
 import postech.soat.student.model.entities.Student;
 
-public record CreateStudentResponse(String name, String email, String phone) {
+public record CreateStudentResponse(String firstName, String lastName, String email, String phone) {
 
     public CreateStudentResponse(Student student) {
-        this(student.getName(), student.getEmail(), student.getPhone());
+        this(
+                student.getName().getFirstName(),
+                student.getName().getLastName(),
+                student.getEmail(),
+                student.getPhone()
+        );
     }
 }

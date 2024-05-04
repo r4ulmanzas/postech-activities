@@ -5,8 +5,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 public record CreateStudentRequest(
-        @NotBlank(message = "Name is mandatory")
-        String name,
+        @NotBlank(message = "First name is mandatory")
+        String firstName,
+        @NotBlank(message =  "Last name is mandatory")
+        String lastName,
         @NotBlank(message = "Email is mandatory")
         @Email(message = "Email should be valid")
         String email,
