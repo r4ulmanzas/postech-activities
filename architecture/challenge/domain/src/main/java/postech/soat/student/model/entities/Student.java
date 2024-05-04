@@ -1,4 +1,4 @@
-package postech.soat.student.entities;
+package postech.soat.student.model.entities;
 
 import lombok.Getter;
 

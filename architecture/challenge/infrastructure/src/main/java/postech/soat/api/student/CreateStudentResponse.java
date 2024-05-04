@@ -1,7 +1,7 @@
 package postech.soat.api.student;
 
 
-import postech.soat.student.entities.Student;
+import postech.soat.student.model.entities.Student;
 
 public record CreateStudentResponse(String name, String email, String phone) {
 
