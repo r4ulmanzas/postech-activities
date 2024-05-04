@@ -1,6 +1,6 @@
-create table book (
-                      id serial primary key,
-                      title varchar(255) not null,
-                      author_name varchar(255) not null,
-                      publisher_name varchar(255) not null
+create table student (
+    id serial primary key,
+    name varchar(255) not null,
+    email varchar(255) not null,
+    phone char(11) not null
 );
