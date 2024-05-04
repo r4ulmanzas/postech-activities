@@ -2,7 +2,7 @@
 This project contains:
 - Domain project is pure and completely segregated from the infrastructure;
 - Swagger documentation;
-- Integration tests for the endpoints;
+- Integration tests for the endpoints + unit tests for the domain model;
 - Code Coverage validation with 90% minimum (counting by branches);
 - Postgres + Flyway configurations for database management.
 
